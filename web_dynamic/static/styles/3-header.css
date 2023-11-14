@@ -5,6 +5,7 @@ header {
     border-bottom: 1px solid #CCCCCC;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .logo {
@@ -12,4 +13,16 @@ header {
     height: 60px;
     background: url("../images/logo.png") no-repeat center;
     padding-left: 20px;
+}
+
+.api-status {
+    width: 40px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    margin-right: 30px;
+    background-color: #cccccc;
+}
+
+.available {
+    background-color: #ff545f;
 }
