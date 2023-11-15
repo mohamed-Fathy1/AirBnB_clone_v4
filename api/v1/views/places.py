@@ -100,6 +100,7 @@ def post_places_search():
 
     req_body = request.get_json()
 
+
     if req_body is None:
         return jsonify({'error': 'Not a JSON'}), 400
 
@@ -169,4 +170,9 @@ def post_places_search():
         for place in removed_places:
             filtered_places.remove(place)
 
+    limit = 10
+    offset = req_body.get('offset')
+    start_index = (offset - 1) * limit
+    end_index = start_index + limit
+    filtered_places = filtered_places[start_index: end_index]
     return jsonify([place.to_dict() for place in filtered_places])

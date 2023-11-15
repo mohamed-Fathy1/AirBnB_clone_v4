@@ -1,6 +1,7 @@
 
 let selectedAminites_list = []
 let selectedAminites_dict = {}
+let offset = 1
 function checkAminites() {
     $('.popover li input').on('click',
         function () {
@@ -29,31 +30,70 @@ function check_api_status(){
     })
 }
 
-function getPlaces() {
-    $('section.filters button').click(() => {
+function loadMore() {
+    $('section.places button.load-more').click(() => {
+        offset++
+        $('section.places button.load-more').remove()
+        $('section.places').append(`
+                         <div class="loading">
+                            <div class="loading-spin"></div>
+                         </div>
+                    `)
+
         let aminity_ids = Object.values(selectedAminites_dict)
 
         let search_data = {
             "states": [],
             "cities": [],
             "amenities": [],
+            "offset": offset,
         }
         search_data.amenities = aminity_ids.map(obj => obj.toString())
         fillter_search(search_data)
     })
-        function fillter_search(search_data) {
-            $.ajax({
-                type: "POST",
-                url: 'http://0.0.0.0:5001/api/v1/places_search',
-                data: JSON.stringify(search_data),
-                contentType: 'application/json',
-                success: (data) => {
-                    $('section.places').empty();
-                    data.forEach((place) => {
-                        let newPlace = `<article>
+
+}
+
+
+function getPlaces() {
+    $('section.filters button').click(() => {
+        offset = 1
+        $('section.places').empty();
+        $('section.places').html(`
+                         <div class="loading">
+                            <div class="loading-spin"></div>
+                         </div>
+                    `)
+        let aminity_ids = Object.values(selectedAminites_dict)
+
+        let search_data = {
+            "states": [],
+            "cities": [],
+            "amenities": [],
+            "offset": offset,
+        }
+        search_data.amenities = aminity_ids.map(obj => obj.toString())
+        fillter_search(search_data)
+    })
+}
+
+function fillter_search(search_data) {
+    $.ajax({
+        type: "POST",
+        url: 'http://0.0.0.0:5001/api/v1/places_search?limit=10',
+        data: JSON.stringify(search_data),
+        contentType: 'application/json',
+        success: (data) => {
+            if (offset === 1)
+                $('section.places').empty();
+            else
+                $('section .loading').remove()
+
+            data.forEach((place) => {
+                let newPlace = `<article>
                     <div class="title_box">
                         <h2>${place.name}</h2>
-                        <div class="price_by_night">${place.price_by_night}</div>
+                        <div class="price_by_night">$${place.price_by_night}</div>
                     </div>
                     <div class="information">
                     <div class="max_guest">${place.max_guest} Guest${(place.max_guest != 1) ? 's' : ''}</div>
@@ -66,14 +106,15 @@ function getPlaces() {
                     ${place.description}
                     </div>
                     </article>`
-                        $('section.places').append(newPlace);
-                    })
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
+                $('section.places').append(newPlace);
             })
+            $('section.places').after(`<div class="load-more"> <button>LOAD MORE</button> </div>`)
+            loadMore()
+        },
+        error: function (error) {
+            console.error('Error:', error);
         }
+    })
 }
 
 $( document ).ready(()=>{
