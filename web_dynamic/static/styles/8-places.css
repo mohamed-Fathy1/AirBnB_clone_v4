@@ -118,9 +118,14 @@ section .loading .loading-spin{
     }
 }
 
-section.places .load-more button{
+.load-more {
+    width: 100%;
+}
+
+.load-more button{
+    display: block;
     padding: 10px 2rem;
-    margin: 0 10rem;
+    margin: 0 auto;
     border-radius: 20px;
     font-size: 1.1rem;
     background-color: #FF5A5F;

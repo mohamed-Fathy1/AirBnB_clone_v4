@@ -2,7 +2,7 @@
 let selectedAminites_list = []
 let selectedAminites_dict = {}
 let offset = 1
-function checkAminites() {
+function checkAminites(){
     $('.popover li input').on('click',
         function () {
             const data_id = $(this).attr("data-id")
@@ -31,9 +31,9 @@ function check_api_status(){
 }
 
 function loadMore() {
-    $('section.places button.load-more').click(() => {
+    $('section.places .load-more button').click(() => {
         offset++
-        $('section.places button.load-more').remove()
+        $('section.places .load-more button').remove()
         $('section.places').append(`
                          <div class="loading">
                             <div class="loading-spin"></div>
@@ -89,6 +89,9 @@ function fillter_search(search_data) {
             else
                 $('section .loading').remove()
 
+            if (data.length === 0)
+                return
+
             data.forEach((place) => {
                 let newPlace = `<article>
                     <div class="title_box">
@@ -108,7 +111,7 @@ function fillter_search(search_data) {
                     </article>`
                 $('section.places').append(newPlace);
             })
-            $('section.places').after(`<div class="load-more"> <button>LOAD MORE</button> </div>`)
+            $('section.places').append(`<div class="load-more"> <button>LOAD MORE</button> </div>`)
             loadMore()
         },
         error: function (error) {
