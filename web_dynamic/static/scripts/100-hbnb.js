@@ -15,7 +15,6 @@ function append_text_to_list() {
 }
 
 
-
 function checkAminites(){
     $('.amenities .popover li input').on('click',
         function () {
@@ -92,14 +91,15 @@ function loadMore() {
                     `)
 
         let aminity_ids = Object.values(selectedAminites_dict)
+        let state_ids = Object.values(selectedStates_dict)
+        let city_ids = Object.values(selectedCities_dict)
 
         let search_data = {
-            "states": [],
-            "cities": [],
-            "amenities": [],
+            "states": state_ids,
+            "cities": city_ids,
+            "amenities": aminity_ids,
             "offset": offset,
         }
-        search_data.amenities = aminity_ids.map(obj => obj.toString())
         fillter_search(search_data)
     })
 
@@ -116,14 +116,15 @@ function getPlaces() {
                          </div>
                     `)
         let aminity_ids = Object.values(selectedAminites_dict)
+        let state_ids = Object.values(selectedStates_dict)
+        let city_ids = Object.values(selectedCities_dict)
 
         let search_data = {
-            "states": [],
-            "cities": [],
-            "amenities": [],
+            "states": state_ids,
+            "cities": city_ids,
+            "amenities": aminity_ids,
             "offset": offset,
         }
-        search_data.amenities = aminity_ids.map(obj => obj.toString())
         fillter_search(search_data)
     })
 }
