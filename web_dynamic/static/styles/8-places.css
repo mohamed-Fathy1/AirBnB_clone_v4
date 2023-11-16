@@ -132,3 +132,52 @@ section .loading .loading-spin{
     color: white;
     cursor: pointer;
 }
+
+.reviews {
+	margin-top: 40px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #DDDDDD;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+article div.reviews h2 {
+    display: inline-block;
+	font-size: 16px;
+	text-align: left;
+    margin: 0;
+}
+
+article div.reviews span.toggle-reviews {
+    font-size: 10px;
+    color: #FAFAFA;
+    padding: 6px;
+    background-color: #FF5A5F;
+    border-radius: 10px;
+    cursor: pointer;
+}
+article div.reviews .toggle-arrow {
+    display: inline-block;
+    width: 6px;
+    aspect-ratio: 1/1;
+    border-bottom: 2px solid #FAFAFA;
+    border-right: 2px solid #FAFAFA;
+    transform: rotate(45deg);
+    margin-left: 2px;
+    transition: .8s ease-in;
+}
+
+article div.reviews ul li {
+	list-style: none;
+	margin: 10px 0;
+}
+
+article div.reviews ul li h3{
+	font-size: 14px;
+}
+
+
+article div.reviews ul li p{
+	font-size: 12px;
+}
