@@ -3,7 +3,19 @@ let selectedAminites_list = []
 let selectedAminites_dict = {}
 let selectedStates_list = []
 let selectedStates_dict = {}
+let selectedCities_list = []
+let selectedCities_dict = {}
 let offset = 1
+
+function append_text_to_list() {
+    states = selectedStates_list.map(ele => `<b>${ele}</b>`)
+    states = states.join(', ')
+    cities = selectedCities_list.join(', ')
+    $('.locations h4').html(cities && states ? states + ', ' + cities : states ? states : cities)
+}
+
+
+
 function checkAminites(){
     $('.amenities .popover li input').on('click',
         function () {
@@ -19,8 +31,10 @@ function checkAminites(){
             $('.amenities h4').html(selectedAminites_list.join(', '))
         })
 }
+
+
 function checkStates(){
-    $('.locations .popover > ul li input').on('click',
+    $('.locations .popover > ul > input').on('click',
         function () {
             const data_id = $(this).attr("data-id")
             const data_name = $(this).attr("data-name")
@@ -31,9 +45,28 @@ function checkStates(){
                 selectedStates_list = selectedStates_list.filter((e, i) => e !== data_name);
                 delete selectedStates_dict[data_name]
             }
-            $('.locations h4').html(selectedStates_list.join(', '))
+            append_text_to_list()
         })
 }
+
+
+
+function checkCities(){
+    $('.locations .popover > ul li input').on('click',
+        function () {
+            const data_id = $(this).attr("data-id")
+            const data_name = $(this).attr("data-name")
+            if ($(this).is(":checked")) {
+                selectedCities_list.push(data_name)
+                selectedCities_dict[data_name] = data_id
+            } else {
+                selectedCities_list = selectedCities_list.filter((e, i) => e !== data_name);
+                delete selectedCities_dict[data_name]
+            }
+            append_text_to_list()
+        })
+}
+
 
 function check_api_status(){
     $(() => {
@@ -46,6 +79,7 @@ function check_api_status(){
         })
     })
 }
+
 
 function loadMore() {
     $('section.places .load-more button').click(() => {
@@ -94,6 +128,7 @@ function getPlaces() {
     })
 }
 
+
 function fillter_search(search_data) {
     $.ajax({
         type: "POST",
@@ -137,10 +172,12 @@ function fillter_search(search_data) {
     })
 }
 
+
 $( document ).ready(()=>{
     $('input[type=checkbox]:checked').prop('checked', false)
     check_api_status()
     checkAminites()
     checkStates()
+    checkCities()
     getPlaces()
 });
