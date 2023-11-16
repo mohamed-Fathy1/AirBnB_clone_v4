@@ -163,7 +163,7 @@ function fillter_search(search_data) {
                     </div>
                     <div class="reviews-container">
                     <div class="reviews">
-                        <h2 style="width: 20px;"></h2>
+                        <h2 style="width: 0px;"></h2>
                         <h2>Reviews</h2>
                         <span class="toggle-reviews">Show <i class="toggle-arrow"></i></span>
                     </div>
@@ -187,7 +187,7 @@ function getReviews() {
         placeID = $(this).parent().parent().parent().attr('data-id')
         url = `http://0.0.0.0:5001/api/v1/places/${placeID}/reviews`
         $.get(url, (data) =>{
-            console.log($(this).parent())
+            $(this).parent().children(":first").html(data.length)
             data.forEach(review => {
                 $(this).parent().parent().append(`
                 <ul>
@@ -208,5 +208,4 @@ $( document ).ready(()=>{
     checkStates()
     checkCities()
     getPlaces()
-
 });
