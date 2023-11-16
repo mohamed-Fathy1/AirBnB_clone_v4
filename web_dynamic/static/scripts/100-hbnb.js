@@ -8,7 +8,7 @@ let selectedCities_dict = {}
 let offset = 1
 
 function append_text_to_list() {
-    states = selectedStates_list.map(ele => `<b>${ele}</b>`)
+    states = selectedStates_list.map(ele => `<b> ${ele} </b>`)
     states = states.join(', ')
     cities = selectedCities_list.join(', ')
     $('.locations h4').html(cities && states ? states + ', ' + cities : states ? states : cities)
@@ -33,7 +33,7 @@ function checkAminites(){
 
 
 function checkStates(){
-    $('.locations .popover > ul > input').on('click',
+    $('.locations .popover > ul > li > input').on('click',
         function () {
             const data_id = $(this).attr("data-id")
             const data_name = $(this).attr("data-name")
@@ -51,7 +51,7 @@ function checkStates(){
 
 
 function checkCities(){
-    $('.locations .popover > ul li input').on('click',
+    $('.locations .popover > ul ul li input').on('click',
         function () {
             const data_id = $(this).attr("data-id")
             const data_name = $(this).attr("data-name")
